@@ -161,7 +161,7 @@ def update(id):
     if request.method == "POST":
         name_to_update.name = request.form['name']
         name_to_update.email = request.form['email']
-        name_to_update.favorite_song =  form['favorite_song']
+        name_to_update.favorite_song =  request.form['favorite_song']
         name_to_update.username = request.form['username']
         try:
             db.session.commit()

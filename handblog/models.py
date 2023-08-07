@@ -54,3 +54,4 @@ class Users(db.Model, UserMixin):
 
     def __repr__(self):
         return '<name %r>' % self.name
+    
