@@ -55,3 +55,10 @@ class Users(db.Model, UserMixin):
     def __repr__(self):
         return '<name %r>' % self.name
     
+class Visit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    page = db.Column(db.String(255), nullable=False)
+    count = db.Column(db.Integer, default=0)
+
+    def __repr__(self):
+        return f"Visit(page={self.page}, count={self.count})"
