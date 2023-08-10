@@ -1,5 +1,6 @@
 from flask import render_template, request, Blueprint
 from handblog.models import Posts
+from handblog.models import Users
 from handblog.posts.form import SearchForm
 from handblog.models import Visit
 from handblog import db
@@ -14,7 +15,8 @@ def home():
         keyword = request.args['keyword']
         page = request.args.get('page', 1 , type=int)
         # search the posts using the keyword
-        posts = Posts.query.filter((Posts.title.like(f'%{keyword}%')) | (Posts.content.like(f'%{keyword}%'))).order_by(Posts.date_posted.desc()).paginate(page=page, per_page=5)
+        posts = Posts.query.filter((Posts.title.like(f'%{keyword}%')) | (Posts.content.like(f'%{keyword}%')) | (Users.name.like(f'%{keyword}%'))).order_by(Posts.date_posted.desc()).paginate(page=page, per_page=5)
+        
         
     # 從資料庫獲取文章
     else:
