@@ -14,7 +14,8 @@ def home():
         keyword = request.args['keyword']
         page = request.args.get('page', 1 , type=int)
         # search the posts using the keyword
-        posts = Posts.query.filter(Posts.title.like(f'%{keyword}%')).order_by(Posts.date_posted.desc()).paginate(page=page, per_page=5)
+        posts = Posts.query.filter((Posts.title.like(f'%{keyword}%')) | (Posts.content.like(f'%{keyword}%'))).order_by(Posts.date_posted.desc()).paginate(page=page, per_page=5)
+        
     # 從資料庫獲取文章
     else:
         page = request.args.get('page', 1 , type=int)
@@ -40,6 +41,7 @@ def get_normalized_page_path(path):
 @main.context_processor
 def base():
     form = SearchForm()
+    
     # 定義取得用戶造訪次數的函式
     def get_visit_count(page):
         visit_record = Visit.query.filter_by(page=page).first()

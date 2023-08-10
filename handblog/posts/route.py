@@ -100,8 +100,9 @@ def search():
         # 取得搜索欄資料
         post.searched = form.searched.data
         # 找尋資料庫資料
-        posts = posts.filter(Posts.content.like('%' + post.searched + '%'))
+        posts = posts.filter(Posts.title.like('%' + post.searched + '%')) | (Posts.content.like(f'%{post.searched}%'))
         posts = posts.order_by(Posts.title).all()
+        
         return render_template("search.html", form=form, searched = post.searched, posts=posts)
 
 @posts.context_processor
