@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+    <h2 align='center'></h2>
+
+    <br/>
+    <div class="card">
+        <div class="card-header">
+        {{ current_user.name }}
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+
+    <div class="container-md">
+      <div class="row">
+        <div class="col-8">
+            <strong>Name：</strong>{{ current_user.name }}<br/>
+            <strong>User Name：</strong>{{ current_user.username }}<br/>
+            <strong>User Number：</strong>{{ current_user.id }}<br/>
+            <div>
+              <strong>Mail：</strong>{{ current_user.email }} 
+              {% if current_user.confirmed %}
+              <span class="checkmark">
+                <div class="checkmark_circle"></div>
+                <div class="checkmark_stem"></div>
+                <div class="checkmark_kick"></div>
+              </span>
+              {% else %}
+              <span class="wrongmark">
+                <div class="wrongmark_circle"></div>
+                <div class="wrongmark_stem"></div>
+                <div class="wrongmark_kick"></div>
+              </span>
+              <a href="{{ url_for('users.send_to_confirmed_mail') }}" class="btn btn-outline-secondary btn-sm">Confirm Mail</a>            
+              {% endif %}
+            </div>           
+            <strong>Song：</strong>{{ current_user.favorite_song }}<br/>
+            <strong>About：</strong>{{ current_user.about_author }}<br/>
+            <strong>Picture：</strong>{{ current_user.profile_pic }}<br/>
+            <strong>New Data Time：</strong>{{ current_user.date_added }}<br/>
+          </p>
+          <a href="{{ url_for('users.logout') }}" class="btn btn-secondary btn-sm">Logout</a>
+          <a href="{{ url_for('users.update', id=current_user.id) }}"class="btn btn-secondary btn-sm" >Edit</a>
+          <a href="{{ url_for('users.delete', id=current_user.id) }}"class="btn btn-danger btn-sm">Delete</a>
+          <br/><br/>
+
+          </div>
+          <div class="col-4">
+            {% if current_user.profile_pic %}
+            <img src="{{ url_for('static', filename='image/'+ current_user.profile_pic)}}" width="200" align='right' >
+
+            {% else %}
+            <img src="{{ url_for('static', filename='image/profile.jpeg')}}" width="200" align='right' >
+            {% endif %}
+
+          </div>
+      </div>
+    </div>
+    
+        </div>
+      </div>
+    <br/>
+    <div class="card">
+        <div class="card-header">
+        Update
+        </div>
+        <div class="card-body">
+            <form action="/dashboard" method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+        
+                {{ form.name.label(class="form-label") }}
+        
+                {{ form.name(class="form-control", value=name_to_update.name) }}
+                <br/>
+        
+                {{ form.username.label(class="form-label") }}
+                {% if form.username.errors %}
+                  {{ form.username(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                  {{ form.username(class="form-control", value=name_to_update.username) }}
+                {% endif %}
+                <br/>
+        
+                {{ form.email.label(class="form-label") }}
+                {% if form.email.errors %}
+                  {{ form.email(class="form-control form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                  {{ form.email(class="form-control", value=name_to_update.email) }}
+                {% endif %}
+                <br/>
+                
+                {{ form.favorite_song.label(class="form-label") }}
+        
+                {{ form.favorite_song(class="form-control", value=name_to_update.favorite_song) }}
+                 
+                <br/>
+                {{ form.about_author.label(class="form-label") }}
+        
+                <textarea name="about_author" class="form-control">{{name_to_update.about_author}}</textarea>        
+                <br/>
+
+                {{ form.profile_pic.label(class="form-label") }}
+        
+                {{ form.profile_pic(class="form-control", value=name_to_update.profile_pic) }}
+
+                <br/>
+
+                {{ form.submit(class="btn btn-secondary btn-sm") }}
+        
+            </form>
+            <h3>{{ test }}</h3>
+        </div>
+{% endblock %}

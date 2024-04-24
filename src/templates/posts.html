@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+	{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		{{ message }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
+	{% for post in posts.items %}
+		<div class="shadow p-3 mb-5 bg-body rounded">
+			<div class="d-flex">
+				{% if post.poster.profile_pic %}
+				<div class="flex-shrink-0">
+					<img class="rounded-circle article-img" src="{{ url_for('static', filename='image/'+ post.poster.profile_pic)}}">
+				</div>
+				{% else %}
+				<div class="flex-shrink-0">
+					<img class="rounded-circle article-img" src="{{ url_for('static', filename='image/profile.jpeg')}}">
+				</div>
+				{% endif %}
+				<div class="flex-grow-1 ms-2">
+					<div class="article-metadata">
+						<a class="article-name" href="{{ url_for('users.user_posts', username=post.poster.username) }}">{{ post.poster.name }}</a>
+						<small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+					</div>
+					<h3><a class="article-title" href="{{ url_for('posts.post', id=post.id) }}">{{ post.title }}</a></h3>
+					<p class="article-content">{{ post.content|safe }}</p>
+				</div>
+			</div>
+		<br/>
+		<a href="{{ url_for('posts.post', id=post.id)}}" class="btn btn-outline-secondary btn-sm">View</a>
+		{% if post.poster_id == current_user.id or current_user.id == 1 %}
+			<a href="{{ url_for('posts.edit_post', id=post.id)}}" class="btn btn-outline-secondary btn-sm">Edit</a>
+			<a href="{{ url_for('posts.delete_post', id=post.id)}}" class="btn btn-outline-danger btn-sm">Delete</a>
+		{% endif %}
+		<br/>
+		</div>
+	{% endfor %}
+	{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			{% if posts.page == page_num %}
+				<a class="btn btn-secondary mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				<a class="btn btn-outline-secondary mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+			{% endif %}	
+		{% else %}
+			...
+		{% endif %}
+
+{% endfor %}
+{% endblock %}

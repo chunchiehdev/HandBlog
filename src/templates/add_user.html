@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
+{% if name %}
+    <h2 align='center'></h2>
+    <br/>
+    <table class="table table-hover
+    table-borered table-striped" >
+    {% for our_user in our_users %}
+        <tr>
+            <td>
+                {{ our_user.id }}. <a href="{{ 
+                    url_for('users.update', id=our_user.id) }}">
+                {{ our_user.name }}</a> - {{ our_user.email }} 
+            </td>
+        </tr>        
+    {% endfor %}
+    </table>
+    <br/></br/>
+
+</script>
+{% else %}
+<br/>
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+
+    <form action ="{{ url_for('users.add_user')}}" method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(class="form-label") }}
+        {{ form.name(class="form-control") }}
+        <br/>
+
+        {{ form.username.label(class="form-label") }}
+
+        {% if form.username.errors %}
+            {{ form.username(class="form-control form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="form-control") }}
+        {% endif %}
+        <br/>
+
+        {{ form.email.label(class="form-label") }}
+
+        {% if form.email.errors %}
+            {{ form.email(class="form-control form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.email(class="form-control") }}
+        {% endif %}
+        <br/>
+
+        {{ form.password_hash.label(class="form-label") }}
+
+        {% if form.password_hash.errors %}
+            {{ form.password_hash(class="form-control") }}
+            <div class="invalid-feedback">
+                {% for error in form.password_hash.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password_hash(class="form-control") }}
+        {% endif %}
+        <br/>
+
+        {{ form.password_hash2.label(class="form-label") }}
+        {% if form.password_hash2.errors %}
+            {{ form.password_hash2(class="form-control") }}
+            <div class="invalid-feedback">
+                {% for error in form.password_hash2.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.password_hash2(class="form-control") }}
+        {% endif %}
+        
+        <br/>
+        {{ form.submit(class="btn btn-dark") }}
+    </form>
+</div>
+
+<br/>
+<table class="table table-hover
+table-borered table-striped">
+    {% if current_user.id == 1 %}
+    {% for our_user in our_users %}
+        <tr>
+            <td>
+                {{ our_user.id }}. 
+                <a href="{{ url_for('users.update', id=our_user.id) }}">{{ our_user.name }}</a> - {{ our_user.username }}
+                - {{ our_user.email }} 
+            </td>
+        </tr>
+        
+    {% endfor %}
+    {% endif %}
+</table>
+
+{% endif %}
+{% endblock %}
