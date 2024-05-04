@@ -1,10 +1,8 @@
 from flask import render_template, request, Blueprint
-from handblog.models import Posts
+from ..models import Posts, Users, Visit
 from sqlalchemy import or_, and_
-from handblog.models import Users
-from handblog.posts.form import SearchForm
-from handblog.models import Visit
-from handblog import db
+from ..posts.form import SearchForm
+from .. import db
 
 main = Blueprint('main', __name__)
 

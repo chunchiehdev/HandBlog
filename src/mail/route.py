@@ -1,8 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from handblog import db
-from handblog.models import Users
-from handblog.mail.verify_token import confirm_token
+from .. import db
+from ..models import Users
+from ..mail.verify_token import confirm_token
 from datetime import datetime
 
 

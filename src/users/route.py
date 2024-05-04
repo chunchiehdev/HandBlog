@@ -1,15 +1,15 @@
 from flask import current_app, render_template, session, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from handblog import db 
-from handblog.models import Users, Posts
-from handblog.users.form import LoginForm, UserForm, PasswordForm, ForgotPasswordFrom, SetForgotPasswordFrom
+from src import db 
+from ..models import Users, Posts
+from ..users.form import LoginForm, UserForm, PasswordForm, ForgotPasswordFrom, SetForgotPasswordFrom
 from werkzeug.security import generate_password_hash ,check_password_hash
 from werkzeug.utils import secure_filename
 import uuid as uuid
 import os
-from handblog.mail.verify_token import generate_confirmation_token, confirm_token
-from handblog.mail.emailBusiness import to_send_email
-from handblog.posts.form import SearchForm
+from ..mail.verify_token import generate_confirmation_token, confirm_token
+from ..mail.emailBusiness import to_send_email
+from ..posts.form import SearchForm
 from flask import request, jsonify
 
 users = Blueprint('users', __name__)

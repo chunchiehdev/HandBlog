@@ -1,4 +1,4 @@
-from handblog import create_app
+from src import create_app
 
 app = create_app()
 

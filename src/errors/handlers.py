@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from handblog.posts.form import SearchForm
+from ..posts.form import SearchForm
 
 errors = Blueprint('errors', __name__)
 

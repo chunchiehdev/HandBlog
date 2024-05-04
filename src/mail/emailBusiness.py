@@ -1,6 +1,6 @@
 from flask_mail import Message
 from flask import current_app, url_for
-from handblog import mailed
+from .. import mailed
 def to_send_email(to, subject, template):
     msg = Message(
         subject,
