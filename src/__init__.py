@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
-from config import Config
+from .config import Config
 from flask_ckeditor import CKEditor
 
 
@@ -23,11 +23,11 @@ def create_app(config_class=Config):
     db.init_app(app)
     ckeditor.init_app(app)
 
-    from users.route import users
-    from posts.route import posts
-    from main.route import main
-    from mail.route import mail
-    from errors.handlers import errors
+    from .users.route import users
+    from .posts.route import posts
+    from .main.route import main
+    from .mail.route import mail
+    from .errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)

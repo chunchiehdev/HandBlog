@@ -13,7 +13,7 @@ Before you start, ensure you have Python installed on your system. You can downl
 Create a virtual environment to manage the project's dependencies separately from your global Python environment:
 
 ```bash
-python -m venv virt
+python3 -m venv virt
 ```
 
 ### Activating the Virtual Environment
