@@ -1,4 +1,4 @@
-# HandBlog
+# Handblog
 
 create a virtual environment:
 
